@@ -6,6 +6,10 @@ import {
   Patch,
   Param,
   Delete,
+  Request,
+  Query,
+  Headers,
+  HttpCode,
   // Version,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -18,29 +22,31 @@ import { UpdateUserDto } from './dto/update-user.dto';
 })
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @Get()
+  findAll(@Query() query) {
+    console.log(query);
+    return {
+      code: 200,
+      message: query.id,
+    };
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
+  @Post()
+  create(@Body() body) {
+    console.log(body);
+    return {
+      code: 200,
+      message: body.id,
+    };
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  @HttpCode(200)
+  findId(@Param() param, @Headers() headers) {
+    console.log(param, headers);
+    return {
+      code: 200,
+      message: param.id,
+    };
   }
 }
