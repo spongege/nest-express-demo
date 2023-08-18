@@ -30,7 +30,7 @@ import { onMounted, reactive, ref } from 'vue'
 
 const codeUrl = ref<string>('/api/user/code')
 
-const resetCode = () => (codeUrl.value = codeUrl.value + '?' + Math.random())
+const resetCode = () => (codeUrl.value = codeUrl.value + '?' + Date.now())
 
 const labelPosition = ref<string>('right')
 
