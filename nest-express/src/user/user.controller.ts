@@ -11,6 +11,7 @@ import {
   Headers,
   HttpCode,
   Response,
+  Inject,
   // Version,
 } from '@nestjs/common';
 import { UserService } from './user.service';
@@ -22,14 +23,16 @@ import { UpdateUserDto } from './dto/update-user.dto';
   // version: '1',
 })
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    @Inject('UC')
+    private readonly userService: UserService,
+    @Inject('TEST') private readonly test: Record<string, any>,
+  ) {}
+
   @Get()
   findAll(@Query() query) {
     console.log(query);
-    return {
-      code: 200,
-      message: query.id,
-    };
+    return this.userService.findAll();
   }
 
   @Post()
