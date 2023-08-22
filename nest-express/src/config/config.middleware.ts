@@ -5,9 +5,10 @@ export default function globalMiddleWare(
   res: Response,
   next: NextFunction,
 ) {
-  if (req.method === 'GET') {
-    res.send('我被全局拦截啦');
-  } else {
-    next();
-  }
+  // if (req.method === 'GET') {
+  //   res.send('我被全局拦截啦');
+  // } else {
+  //   next();
+  // }
+  next();
 }
