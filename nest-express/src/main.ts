@@ -6,6 +6,8 @@ import * as cors from 'cors';
 import globalMiddleWare from './config/config.middleware';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
+import { HttpResponse } from './config/http.response';
+import { HttpFilter } from './config/http.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -17,6 +19,10 @@ async function bootstrap() {
   app.use(cors());
   // 全局 中间件
   app.use(globalMiddleWare);
+  // 全局相应拦截器
+  app.useGlobalInterceptors(new HttpResponse());
+  // 全局异常拦截器
+  app.useGlobalFilters(new HttpFilter());
   // 接口版本化管理
   app.enableVersioning({
     type: VersioningType.URI,
