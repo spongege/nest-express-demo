@@ -18,7 +18,7 @@ export class HttpResponse<T> implements NestInterceptor {
     // console.log(context);
     return next.handle().pipe(
       map((data) => {
-        console.log(data);
+        // console.log(data);
         return {
           data,
           status: 0,

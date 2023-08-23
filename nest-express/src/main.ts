@@ -1,7 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import * as session from 'express-session';
 import { AppModule } from './app.module';
-import { VERSION_NEUTRAL, VersioningType } from '@nestjs/common';
+import {
+  VERSION_NEUTRAL,
+  ValidationPipe,
+  VersioningType,
+} from '@nestjs/common';
 import * as cors from 'cors';
 import globalMiddleWare from './config/config.middleware';
 import { NestExpressApplication } from '@nestjs/platform-express';
@@ -22,7 +26,9 @@ async function bootstrap() {
   // 全局相应拦截器
   app.useGlobalInterceptors(new HttpResponse());
   // 全局异常拦截器
-  app.useGlobalFilters(new HttpFilter());
+  // app.useGlobalFilters(new HttpFilter());
+  // 管道校验器
+  app.useGlobalPipes(new ValidationPipe());
   // 接口版本化管理
   app.enableVersioning({
     type: VersioningType.URI,
