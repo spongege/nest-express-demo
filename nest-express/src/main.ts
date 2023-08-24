@@ -12,6 +12,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { HttpResponse } from './config/http.response';
 import { HttpFilter } from './config/http.filter';
+// import { RoleGuard } from './guard/role.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -29,6 +30,8 @@ async function bootstrap() {
   // app.useGlobalFilters(new HttpFilter());
   // 管道校验器
   app.useGlobalPipes(new ValidationPipe());
+  // 全局使用守卫
+  // app.useGlobalGuards(new RoleGuard());
   // 接口版本化管理
   app.enableVersioning({
     type: VersioningType.URI,

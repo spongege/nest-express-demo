@@ -23,7 +23,7 @@ export class HttpResponse<T> implements NestInterceptor {
           data,
           status: 0,
           success: true,
-          message: '成功format成json返回啦！',
+          message: 'format to json',
         };
       }),
     );
