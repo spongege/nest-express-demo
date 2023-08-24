@@ -10,8 +10,10 @@ import { Controller, Get, Inject, Param, ParseIntPipe } from '@nestjs/common';
 // DefaultValuePipe
 import { AppService } from './app.service';
 import { UserService } from './user/user.service';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller()
+@ApiTags('全局')
 export class AppController {
   constructor(
     private readonly appService: AppService,

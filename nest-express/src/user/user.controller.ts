@@ -17,11 +17,25 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import {
+  ApiBasicAuth,
+  ApiBearerAuth,
+  ApiCookieAuth,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 @Controller({
   path: 'user',
   // version: '1',
 })
+@ApiTags('用户')
+@ApiBasicAuth()
+@ApiBearerAuth()
+@ApiCookieAuth()
 export class UserController {
   constructor(
     @Inject('UC')
@@ -30,18 +44,38 @@ export class UserController {
   ) {}
 
   @Get()
+  @ApiOperation({
+    summary: '测试',
+    description: '测试测试测试测试测试测试测试',
+  })
+  @ApiParam({
+    name: 'id',
+    description: '需要 param id',
+    required: true,
+  })
+  @ApiQuery({
+    name: 'id',
+    description: '需要 query id',
+    required: true,
+  })
   findAll(@Query() query) {
     console.log(query);
     return this.userService.findAll();
   }
 
   @Post()
-  create(@Body() body) {
-    console.log(body);
-    return {
-      code: 200,
-      message: body.id,
-    };
+  @ApiResponse({
+    status: 403,
+    description: '自定义返回信息',
+  })
+  create(@Body() body, @Body() createUserDto: CreateUserDto) {
+    console.log(body, createUserDto);
+    // return {
+    //   code: 200,
+    //   message: body.id,
+    // };
+    // @Body 装饰的 createUserDto 才能将 @ApiProperty 映射到 swagger
+    return this.userService.create(createUserDto);
   }
 
   // @Get(':id')

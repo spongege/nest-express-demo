@@ -15,7 +15,6 @@ export class RoleGuard implements CanActivate {
 
     console.log('经过了守卫', roleArr);
     const request = context.switchToHttp().getRequest<Request>();
-    console.log(request.body);
     // console.log(request.body);
     if (roleArr.includes(request.body.role)) {
       return true;

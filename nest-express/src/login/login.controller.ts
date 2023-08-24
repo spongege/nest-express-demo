@@ -10,9 +10,11 @@ import {
 import { LoginService } from './login.service';
 import { CreateLoginDto } from './dto/create-login.dto';
 import { UpdateLoginDto } from './dto/update-login.dto';
+import { ApiTags } from '@nestjs/swagger';
 // import { LoginPipe } from './login.pipe';
 
 @Controller('login')
+@ApiTags('登录')
 export class LoginController {
   constructor(private readonly loginService: LoginService) {}
 

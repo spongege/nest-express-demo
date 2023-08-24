@@ -18,8 +18,10 @@ import { join, resolve } from 'path';
 import { readdirSync } from 'fs';
 import type { Response } from 'express';
 import { zip } from 'compressing';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('upload')
+@ApiTags('上传')
 export class UploadController {
   constructor(private readonly uploadService: UploadService) {}
 

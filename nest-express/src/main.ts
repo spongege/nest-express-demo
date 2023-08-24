@@ -11,7 +11,8 @@ import globalMiddleWare from './config/config.middleware';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { HttpResponse } from './config/http.response';
-import { HttpFilter } from './config/http.filter';
+// import { HttpFilter } from './config/http.filter';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 // import { RoleGuard } from './guard/role.guard';
 
 async function bootstrap() {
@@ -35,7 +36,8 @@ async function bootstrap() {
   // 接口版本化管理
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: [VERSION_NEUTRAL, '1', '2'],
+    defaultVersion: [VERSION_NEUTRAL],
+    // defaultVersion: [VERSION_NEUTRAL, '1', '2'],
   });
   // 配置session
   app.use(
@@ -46,6 +48,20 @@ async function bootstrap() {
       cookie: { maxAge: null },
     }),
   );
+
+  // 在main.ts 注册swagger
+  const options = new DocumentBuilder()
+    .setTitle('nest 接口描述')
+    .setDescription('description')
+    .setVersion('1')
+    .setLicense('nestjs', 'https://docs.nestjs.cn/')
+    .addBearerAuth()
+    .addBasicAuth()
+    .addCookieAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('/api-docs', app, document);
+
   await app.listen(3000);
 }
 bootstrap();
