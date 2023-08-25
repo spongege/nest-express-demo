@@ -62,7 +62,7 @@ const form = reactive({
 //清空数据
 const resetForm = reactive({ ...form })
 //表格数据
-const tableData = ref([])
+const tableData = ref<any[]>([])
 //弹框开关
 const dialogVisible = ref<boolean>(false)
 const openDialog = () => {
@@ -71,9 +71,11 @@ const openDialog = () => {
 }
 //初始化表格数据
 const init = async () => {
-  const list = await getList(search)
-  tableData.value = Array.isArray(list?.data) ? list?.data : []
-  total.value = list?.total ?? 0
+  const {
+    data: { listData, total: listTotal }
+  } = await getList(search)
+  tableData.value = Array.isArray(listData) ? listData : []
+  total.value = listTotal ?? 0
 }
 init()
 const changeSize = (page) => {

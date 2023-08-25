@@ -1,5 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { InternetService } from './internet.service';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
+import { InternetService, SearchType } from './internet.service';
 import { CreateInternetDto } from './dto/create-internet.dto';
 import { UpdateInternetDto } from './dto/update-internet.dto';
 
@@ -13,8 +22,8 @@ export class InternetController {
   }
 
   @Get()
-  findAll() {
-    return this.internetService.findAll();
+  findAll(@Query() query: SearchType) {
+    return this.internetService.findAll(query);
   }
 
   @Get(':id')
@@ -23,7 +32,10 @@ export class InternetController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateInternetDto: UpdateInternetDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateInternetDto: UpdateInternetDto,
+  ) {
     return this.internetService.update(+id, updateInternetDto);
   }
 

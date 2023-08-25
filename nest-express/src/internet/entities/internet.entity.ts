@@ -21,7 +21,7 @@ export class Internet {
   })
   ip: string;
    */
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @Column({
@@ -30,24 +30,30 @@ export class Internet {
   })
   name: string;
 
-  @Column()
-  age: number;
-
-  @CreateDateColumn()
-  time: Date;
-
   @Column({
-    type: 'enum',
-    enum: [1, 2, 3],
-    default: 1,
+    type: 'varchar',
+    length: 100,
   })
-  enum: number;
+  desc: string;
 
-  // simple-array的特殊列类型，它可以将原始数组值存储在单个字符串列中。 所有值都以逗号分隔
-  @Column({ type: 'simple-array' })
-  simpleArray: string[];
+  // @Column()
+  // age: number;
 
-  // simple-json的特殊列类型，它可以存储任何可以通过 JSON.stringify 存储在数据库中的值。 当你的数据库中没有 json 类型而你又想存储和加载对象，该类型就很有用了
-  @Column('simple-json')
-  simpleJson: { name: string; nickname: string };
+  // @CreateDateColumn()
+  // time: Date;
+
+  // @Column({
+  //   type: 'enum',
+  //   enum: [1, 2, 3],
+  //   default: 1,
+  // })
+  // enum: number;
+
+  // // simple-array的特殊列类型，它可以将原始数组值存储在单个字符串列中。 所有值都以逗号分隔
+  // @Column({ type: 'simple-array' })
+  // simpleArray: string[];
+
+  // // simple-json的特殊列类型，它可以存储任何可以通过 JSON.stringify 存储在数据库中的值。 当你的数据库中没有 json 类型而你又想存储和加载对象，该类型就很有用了
+  // @Column('simple-json')
+  // simpleJson: { name: string; nickname: string };
 }
