@@ -8,11 +8,13 @@
     <el-table border :data="tableData" style="width: 100%; margin-top: 30px">
       <el-table-column prop="name" label="名字" />
       <el-table-column prop="desc" label="描述" />
+
       <el-table-column prop="id" label="id" />
       <el-table-column>
         <template #default="scope">
           <el-button @click="edit(scope.row)">编辑</el-button>
           <el-button @click="deleteRow(scope.row)">删除</el-button>
+          <el-button @click="(isShowTag = true), (row = scope.row)">添加tag</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -22,6 +24,7 @@
       background
       layout="prev, pager, next"
       :total="total"
+      :page-size="5"
     />
   </div>
 
@@ -41,17 +44,43 @@
       </span>
     </template>
   </el-dialog>
+  <el-dialog v-model="isShowTag" title="添加tag">
+    <el-select style="width: 100%" v-model="tags" multiple>
+      <el-option value="tag1">tag1</el-option>
+      <el-option value="tag2">tag2</el-option>
+      <el-option value="tag3">tag3</el-option>
+    </el-select>
+    <template #footer>
+      <el-button @click="addTa" type="primary">确定</el-button>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { addUser, updateUser, delUser, getList } from '../server'
+import { addUser, updateUser, delUser, getList, addTags } from '../server'
+const isShowTag = ref<boolean>(false)
+const tags = ref<string[]>([])
 const total = ref<number>(0)
+const row = ref<{
+  id?: number
+  name?: string
+  desc?: string
+  createTime?: Date
+}>({})
+const addTa = async () => {
+  const res = await addTags({
+    tags: tags.value,
+    userId: row.value.id
+  })
+  isShowTag.value = false
+  tags.value = []
+}
 //搜索框
 const search = reactive({
   keyWord: '',
   page: 1,
-  pageSize: 10
+  pageSize: 5
 })
 //表单
 const form = reactive({

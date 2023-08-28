@@ -2,8 +2,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Tags } from './tags.entity';
 
 @Entity({})
 export class Internet {
@@ -22,7 +24,7 @@ export class Internet {
   ip: string;
    */
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
 
   @Column({
     type: 'varchar',
@@ -35,6 +37,12 @@ export class Internet {
     length: 100,
   })
   desc: string;
+
+  @CreateDateColumn()
+  time: Date;
+
+  @OneToMany(() => Tags, (tags) => tags.internet)
+  tags: Tags[];
 
   // @Column()
   // age: number;

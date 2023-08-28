@@ -10,3 +10,6 @@ export const delUser = (data) => axios.delete(`/internet/${data.id}`).then((res)
 
 export const updateUser = (data) =>
   axios.patch(`/internet/${data.id}`, data).then((res) => res.data)
+
+//添加tag
+export const addTags = (data) => axios.post(`/internet/add/tags`, data).then((res) => res.data)

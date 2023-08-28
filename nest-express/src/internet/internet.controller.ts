@@ -8,7 +8,11 @@ import {
   Delete,
   Query,
 } from '@nestjs/common';
-import { InternetService, SearchType } from './internet.service';
+import {
+  InternetService,
+  SearchType,
+  UpdateTagsType,
+} from './internet.service';
 import { CreateInternetDto } from './dto/create-internet.dto';
 import { UpdateInternetDto } from './dto/update-internet.dto';
 
@@ -19,6 +23,10 @@ export class InternetController {
   @Post()
   create(@Body() createInternetDto: CreateInternetDto) {
     return this.internetService.create(createInternetDto);
+  }
+  @Post('/add/tags')
+  addTags(@Body() body: UpdateTagsType) {
+    return this.internetService.addTags(body);
   }
 
   @Get()
