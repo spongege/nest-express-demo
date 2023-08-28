@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { Tags } from './tags.entity';
 
-@Entity({})
+@Entity()
 export class Internet {
   /* 
   @Column({
